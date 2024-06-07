@@ -11,3 +11,7 @@ body {
   height: 700px;
   
 } */
+
+canvas {
+  touch-action: none; /* verhindert Standard-Scroll- und Zoom-Gesten */
+}
