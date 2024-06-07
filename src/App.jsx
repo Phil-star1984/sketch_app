@@ -1,4 +1,7 @@
 import { useState, useRef, useEffect } from "react";
+import html2canvas from "html2canvas";
+import downloadjs from "downloadjs";
+import { CirclePicker } from "react-color";
 import "./App.css";
 
 function App() {
@@ -6,7 +9,16 @@ function App() {
   const contextRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [lineBrushWidth, setLineBrushWidth] = useState(5);
+  const [canvasBackgroundColor, setCanvasBackgroundColor] = useState("#f9a1ff");
+
+  // Festgelegte Farben für den CirclePicker
+  const customColors = ["#33C1FF", "#75FF33", "#F833FF"];
+
   /* const [isChecked, setIsChecked] = useState(true); */
+
+  /* state = {
+    background: "fff",
+  }; */
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -22,7 +34,13 @@ function App() {
     context.strokeStyle = "black";
     context.lineWidth = lineBrushWidth;
     contextRef.current = context;
-  }, [lineBrushWidth]);
+  }, []);
+
+  useEffect(() => {
+    if (contextRef.current) {
+      contextRef.current.lineWidth = lineBrushWidth; // Aktualisiere nur die lineWidth
+    }
+  }, [lineBrushWidth]); // Füge eine neue useEffect für die lineBrushWidth hinzu
 
   const getCoordinates = (event) => {
     if (event.type.includes("mouse")) {
@@ -65,38 +83,67 @@ function App() {
     setLineBrushWidth(newWidth);
   };
 
+  const downloadCanvas = async (event) => {
+    event.preventDefault();
+    console.log(canvasRef.current);
+    //es wird ein Blob/Link erstellt, eine URL, dann wird ein click auf den Link simmuliert, und dann folgt evtl. ein cleanup
+    const canvas = await html2canvas(document.body);
+    const dataURL = canvas.toDataURL("image/png");
+    downloadjs(dataURL, "downloadSplash.png", "image/png");
+  };
+
+  const handleColorChange = (color, event) => {
+    setCanvasBackgroundColor(color.hex);
+  };
+
   return (
     <>
       <div className="header">
         <div className="logo">
-          <h3>Millionpainter</h3>
+          <p>Millionpainter</p>
         </div>
 
-        <div>
-          <label>
-            Stroke
-            <input
-              type="radio"
-              name="brushWidth"
-              checked={lineBrushWidth === 5}
-              onChange={() => handleBrushChange(5)}
-            />
-            Light
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="brushWidth"
-              checked={lineBrushWidth === 15}
-              onChange={() => handleBrushChange(15)}
-            />
-            Bold
-          </label>
+        <div className="options">
+          <div className="brush_options">
+            <label>
+              Stroke
+              <input
+                type="radio"
+                name="brushWidth"
+                checked={lineBrushWidth === 5}
+                onChange={() => handleBrushChange(5)}
+              />
+              Light
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="brushWidth"
+                checked={lineBrushWidth === 15}
+                onChange={() => handleBrushChange(15)}
+              />
+              Bold
+            </label>
+          </div>
+          <CirclePicker
+            color={canvasBackgroundColor}
+            onChangeComplete={handleColorChange}
+            colors={customColors}
+            width="100px"
+            circleSize={18}
+          />
+          <button className="download_canvas_button" onClick={downloadCanvas}>
+            Save
+          </button>
         </div>
       </div>
       <canvas
         ref={canvasRef}
-        style={{ backgroundColor: "#f9a1ff", width: "100%", height: "100vh" }}
+        style={{
+          backgroundColor: `${canvasBackgroundColor}`,
+          width: "100%",
+          height: "100vh",
+        }}
         onMouseDown={startDrawing}
         onMouseUp={finishDrawing}
         onMouseMove={draw}
