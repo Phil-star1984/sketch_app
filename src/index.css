@@ -15,3 +15,15 @@ body {
 canvas {
   touch-action: none; /* verhindert Standard-Scroll- und Zoom-Gesten */
 }
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.3rem;
+}
+
+.logo h3 {
+  padding: 0;
+  margin: 0;
+}

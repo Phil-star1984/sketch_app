@@ -5,6 +5,8 @@ function App() {
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
+  const [lineBrushWidth, setLineBrushWidth] = useState(5);
+  /* const [isChecked, setIsChecked] = useState(true); */
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -18,9 +20,9 @@ function App() {
     context.scale(2, 2);
     context.lineCap = "round";
     context.strokeStyle = "black";
-    context.lineWidth = 5;
+    context.lineWidth = lineBrushWidth;
     contextRef.current = context;
-  }, []);
+  }, [lineBrushWidth]);
 
   const getCoordinates = (event) => {
     if (event.type.includes("mouse")) {
@@ -59,23 +61,49 @@ function App() {
     contextRef.current.stroke();
   };
 
+  const handleBrushChange = (newWidth) => {
+    setLineBrushWidth(newWidth);
+  };
+
   return (
     <>
-      <div>
-        <h2 style={{ textAlign: "center", padding: 0, margin: 10 }}>
-          Millionpainter
-        </h2>
-        <canvas
-          ref={canvasRef}
-          style={{ backgroundColor: "#f9a1ff", width: "100%", height: "100vh" }}
-          onMouseDown={startDrawing}
-          onMouseUp={finishDrawing}
-          onMouseMove={draw}
-          onTouchStart={startDrawing}
-          onTouchEnd={finishDrawing}
-          onTouchMove={draw}
-        ></canvas>
+      <div className="header">
+        <div className="logo">
+          <h3>Millionpainter</h3>
+        </div>
+
+        <div>
+          <label>
+            Stroke
+            <input
+              type="radio"
+              name="brushWidth"
+              checked={lineBrushWidth === 5}
+              onChange={() => handleBrushChange(5)}
+            />
+            Light
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="brushWidth"
+              checked={lineBrushWidth === 15}
+              onChange={() => handleBrushChange(15)}
+            />
+            Bold
+          </label>
+        </div>
       </div>
+      <canvas
+        ref={canvasRef}
+        style={{ backgroundColor: "#f9a1ff", width: "100%", height: "100vh" }}
+        onMouseDown={startDrawing}
+        onMouseUp={finishDrawing}
+        onMouseMove={draw}
+        onTouchStart={startDrawing}
+        onTouchEnd={finishDrawing}
+        onTouchMove={draw}
+      ></canvas>
     </>
   );
 }
