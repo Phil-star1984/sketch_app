@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from "react";
-
 import "./App.css";
 
 function App() {
@@ -21,13 +20,25 @@ function App() {
     context.strokeStyle = "black";
     context.lineWidth = 5;
     contextRef.current = context;
-    console.log(canvas);
   }, []);
 
-  const startDrawing = ({ nativeEvent }) => {
-    const { offsetX, offsetY } = nativeEvent;
+  const getCoordinates = (event) => {
+    if (event.type.includes("mouse")) {
+      return { x: event.nativeEvent.offsetX, y: event.nativeEvent.offsetY };
+    } else {
+      const touch = event.touches[0];
+      const rect = canvasRef.current.getBoundingClientRect();
+      return {
+        x: touch.clientX - rect.left,
+        y: touch.clientY - rect.top,
+      };
+    }
+  };
+
+  const startDrawing = (event) => {
+    const { x, y } = getCoordinates(event);
     contextRef.current.beginPath();
-    contextRef.current.moveTo(offsetX, offsetY);
+    contextRef.current.moveTo(x, y);
     setIsDrawing(true);
   };
 
@@ -36,25 +47,30 @@ function App() {
     setIsDrawing(false);
   };
 
-  const draw = ({ nativeEvent }) => {
+  const draw = (event) => {
     if (!isDrawing) {
       return;
     }
-    const { offsetX, offsetY } = nativeEvent;
-    contextRef.current.lineTo(offsetX, offsetY);
+    const { x, y } = getCoordinates(event);
+    contextRef.current.lineTo(x, y);
     contextRef.current.stroke();
   };
 
   return (
     <>
       <div>
-        <h2 style={{ textAlign: "center", padding: 0, margin: 10 }}>Millionpainter</h2>
+        <h2 style={{ textAlign: "center", padding: 0, margin: 10 }}>
+          Millionpainter
+        </h2>
         <canvas
           ref={canvasRef}
           style={{ backgroundColor: "#f9a1ff", width: "100%", height: "100vh" }}
           onMouseDown={startDrawing}
           onMouseUp={finishDrawing}
           onMouseMove={draw}
+          onTouchStart={startDrawing}
+          onTouchEnd={finishDrawing}
+          onTouchMove={draw}
         ></canvas>
       </div>
     </>
