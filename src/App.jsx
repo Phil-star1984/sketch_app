@@ -36,13 +36,15 @@ function App() {
   };
 
   const startDrawing = (event) => {
+    event.preventDefault();
     const { x, y } = getCoordinates(event);
     contextRef.current.beginPath();
     contextRef.current.moveTo(x, y);
     setIsDrawing(true);
   };
 
-  const finishDrawing = () => {
+  const finishDrawing = (event) => {
+    event.preventDefault();
     contextRef.current.closePath();
     setIsDrawing(false);
   };
@@ -51,6 +53,7 @@ function App() {
     if (!isDrawing) {
       return;
     }
+    event.preventDefault();
     const { x, y } = getCoordinates(event);
     contextRef.current.lineTo(x, y);
     contextRef.current.stroke();
