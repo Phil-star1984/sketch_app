@@ -9,16 +9,10 @@ function App() {
   const contextRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [lineBrushWidth, setLineBrushWidth] = useState(5);
-  const [canvasBackgroundColor, setCanvasBackgroundColor] = useState("#f9a1ff");
+  const [canvasBackgroundColor, setCanvasBackgroundColor] = useState("#f2f2f2");
 
   // Festgelegte Farben für den CirclePicker
-  const customColors = ["#33C1FF", "#75FF33", "#F833FF"];
-
-  /* const [isChecked, setIsChecked] = useState(true); */
-
-  /* state = {
-    background: "fff",
-  }; */
+  const customColors = ["#b0daff", "#bafab4", "#f9a1ff"];
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -32,6 +26,7 @@ function App() {
     context.scale(2, 2);
     context.lineCap = "round";
     context.strokeStyle = "black";
+    context.lineJoin = "bevel";
     context.lineWidth = lineBrushWidth;
     contextRef.current = context;
   }, []);
@@ -75,6 +70,7 @@ function App() {
     }
     event.preventDefault();
     const { x, y } = getCoordinates(event);
+
     contextRef.current.lineTo(x, y);
     contextRef.current.stroke();
   };
@@ -88,8 +84,8 @@ function App() {
     console.log(canvasRef.current);
     //es wird ein Blob/Link erstellt, eine URL, dann wird ein click auf den Link simmuliert, und dann folgt evtl. ein cleanup
     const canvas = await html2canvas(document.body);
-    const dataURL = canvas.toDataURL("image/png");
-    downloadjs(dataURL, "downloadSplash.png", "image/png");
+    const dataURL = canvas.toDataURL("image/jpeg", 1.0);
+    downloadjs(dataURL, "downloadSplash.jpg", "image/jpeg");
   };
 
   const handleColorChange = (color, event) => {
@@ -129,8 +125,9 @@ function App() {
             color={canvasBackgroundColor}
             onChangeComplete={handleColorChange}
             colors={customColors}
-            width="100px"
+            width="72px"
             circleSize={18}
+            circleSpacing={6}
           />
           <button className="download_canvas_button" onClick={downloadCanvas}>
             Save
