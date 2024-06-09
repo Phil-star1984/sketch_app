@@ -30,12 +30,8 @@ function App() {
     context.lineJoin = "bevel";
     context.lineWidth = lineBrushWidth;
 
-    // Setze den Hintergrund auf Weiß, bevor irgendwelche Zeichnungen beginnen
-    context.fillStyle = canvasBackgroundColor;
-    context.fillRect(0, 0, canvas.width, canvas.height);
-
     contextRef.current = context;
-  }, [canvasBackgroundColor]);
+  }, []);
 
   useEffect(() => {
     if (contextRef.current) {
@@ -101,35 +97,29 @@ function App() {
   const sendCanvasToServer = async (event) => {
     event.preventDefault();
     const serverURL = "http://localhost:3000/skizzen";
-    const canvas = canvasRef.current;
 
-    if (!canvas) {
-      console.error("Canvas nicht verfügbar");
-      return;
-    }
+    // Verwenden Sie html2canvas, um das Bild zu erfassen
+    html2canvas(document.body).then((canvas) => {
+      canvas.toBlob(
+        async (blob) => {
+          const formData = new FormData();
+          formData.append("image", blob, "MillionPainterSketch.jpg");
 
-    canvas.toBlob(
-      async (blob) => {
-        const formData = new FormData();
-        formData.append("image", blob, "MillionPainterSketch.jpg");
-
-        try {
-          const response = await axios.post(serverURL, formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          });
-          console.log("Bild erfolgreich gesendet:", response.data);
-
-          // Optional: Umleitung des Nutzers zur Unterseite, wo das Bild angezeigt wird
-          // window.location.href = "https://www.meinewebsite.com/skizzen";
-        } catch (error) {
-          console.error("Fehler beim Senden des Bildes:", error);
-        }
-      },
-      "image/jpeg",
-      1.0
-    ); // Qualität auf 1.0 für beste Qualität
+          try {
+            const response = await axios.post(serverURL, formData, {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            });
+            console.log("Bild erfolgreich gesendet:", response.data);
+          } catch (error) {
+            console.error("Fehler beim Senden des Bildes:", error);
+          }
+        },
+        "image/jpeg",
+        0.7
+      );
+    });
   };
 
   return (
