@@ -98,6 +98,8 @@ function App() {
     event.preventDefault();
     const serverURL = import.meta.env.VITE_SERVER;
 
+    console.log(import.meta.env.VITE_SERVER);
+
     // Verwenden Sie html2canvas, um das Bild zu erfassen
     html2canvas(document.body).then((canvas) => {
       canvas.toBlob(
