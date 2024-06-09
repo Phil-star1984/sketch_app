@@ -96,7 +96,7 @@ function App() {
 
   const sendCanvasToServer = async (event) => {
     event.preventDefault();
-    const serverURL = "http://localhost:3000/skizzen";
+    const serverURL = import.meta.env.VITE_SERVER;
 
     // Verwenden Sie html2canvas, um das Bild zu erfassen
     html2canvas(document.body).then((canvas) => {
