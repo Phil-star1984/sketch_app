@@ -63,3 +63,26 @@ button {
   background-color: rgba(0, 255, 255, 0);
   border-radius: 0.2rem;
 }
+
+/* Sketches Component */
+.sketches_wrapper {
+  /* border: 5px solid red; */
+  text-align: center;
+}
+
+.sketches_container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  grid-auto-rows: minmax(100px, auto);
+  /* border: 3px solid blue; */
+}
+
+.sketches_card :hover {
+  border: 2px solid black;
+  box-sizing: border-box;
+}
+
+.sketches_card img {
+  max-width: 300px;
+}
