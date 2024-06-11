@@ -98,7 +98,7 @@ function Home() {
 
     // Verwende html2canvas, um das Bild zu erfassen
     html2canvas(document.body, {
-      scale: 0.2,
+      scale: 0.5,
     }).then((canvas) => {
       canvas.toBlob(
         async (blob) => {
@@ -117,7 +117,7 @@ function Home() {
           }
         },
         "image/jpeg",
-        0.5
+        0.7
       );
     });
   };
