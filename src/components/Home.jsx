@@ -97,7 +97,9 @@ function Home() {
     const serverURL = import.meta.env.VITE_SERVER_BASE + "/skizzen";
 
     // Verwende html2canvas, um das Bild zu erfassen
-    html2canvas(document.body).then((canvas) => {
+    html2canvas(document.body, {
+      scale: 0.2,
+    }).then((canvas) => {
       canvas.toBlob(
         async (blob) => {
           const formData = new FormData();
@@ -115,7 +117,7 @@ function Home() {
           }
         },
         "image/jpeg",
-        0.7
+        0.5
       );
     });
   };
