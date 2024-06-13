@@ -10,9 +10,8 @@ function Sketches() {
         const result = await axios.get(
           import.meta.env.VITE_SERVER_BASE + "/uploads"
         );
-        result.data.files.shift();
-        /* console.log(result.data.files); */
-        setImages(result.data.files);
+
+        setImages(result.data);
       } catch (error) {
         console.error("Fehler beim Abrufen der Bilder:", error);
       }
@@ -25,8 +24,8 @@ function Sketches() {
       <h1>Sketches</h1>
       <div className="sketches_container">
         {images.map((image) => (
-          <div key={image} className="sketches_card">
-            <img src={image} alt="Sketch" />
+          <div key={image.name} className="sketches_card">
+            <img src={image.url} alt="Sketch" />
           </div>
         ))}
       </div>
