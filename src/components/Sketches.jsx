@@ -8,7 +8,7 @@ function Sketches() {
     const fetchImages = async () => {
       try {
         const result = await axios.get(
-          import.meta.env.VITE_SERVER_BASE + "/uploads"
+          import.meta.env.VITE_SERVER_BASE + "/api/sketches"
         );
 
         setImages(result.data);

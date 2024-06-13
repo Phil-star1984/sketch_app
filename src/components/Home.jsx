@@ -152,7 +152,7 @@ function Home() {
             </label>
           </div>
           <CirclePicker
-            color={canvasBackgroundColor}
+            color={canvasBackgroundColor || "defaultColor"}
             onChangeComplete={handleColorChange}
             colors={customColors}
             width="72px"
