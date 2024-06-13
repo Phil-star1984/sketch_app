@@ -94,7 +94,7 @@ function Home() {
 
   const sendCanvasToServer = async (event) => {
     event.preventDefault();
-    const serverURL = import.meta.env.VITE_SERVER_BASE + "/skizzen";
+    const serverURL = import.meta.env.VITE_SERVER_BASE + "/api/sketches";
 
     // Verwende html2canvas, um das Bild zu erfassen
     html2canvas(document.body, {
