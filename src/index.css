@@ -78,6 +78,17 @@ button {
   /* border: 3px solid blue; */
 }
 
+.sending_sketch_container {
+  background-color: green;
+}
+
+.sending_sketch_container p {
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  color: white;
+}
+
 .sketches_card :hover {
   border: 2px solid black;
   box-sizing: border-box;

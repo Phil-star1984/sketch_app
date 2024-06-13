@@ -10,6 +10,7 @@ function Home() {
   const [isDrawing, setIsDrawing] = useState(false);
   const [lineBrushWidth, setLineBrushWidth] = useState(5);
   const [canvasBackgroundColor, setCanvasBackgroundColor] = useState("#f2f2f2");
+  const [sendingSketch, setSendingSketch] = useState(false);
 
   // Festgelegte Farben für den CirclePicker
   const customColors = ["#b0daff", "#bafab4", "#f9a1ff"];
@@ -94,6 +95,7 @@ function Home() {
 
   const sendCanvasToServer = async (event) => {
     event.preventDefault();
+    setSendingSketch(true);
     const serverURL = import.meta.env.VITE_SERVER_BASE + "/api/sketches";
 
     // Verwende html2canvas, um das Bild zu erfassen
@@ -112,6 +114,7 @@ function Home() {
               },
             });
             console.log("Bild erfolgreich gesendet:", response.data);
+            setSendingSketch(false);
           } catch (error) {
             console.error("Fehler beim Senden des Bildes:", error);
           }
@@ -167,6 +170,11 @@ function Home() {
           </button>
         </div>
       </div>
+      {sendingSketch && (
+        <div className="sending_sketch_container">
+          <p>Sending Sketch</p>
+        </div>
+      )}
       <canvas
         ref={canvasRef}
         style={{
