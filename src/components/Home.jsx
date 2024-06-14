@@ -166,7 +166,7 @@ function Home() {
             Save
           </button>
           <button className="send_canvas_button" onClick={sendCanvasToServer}>
-            Send
+            Publish
           </button>
         </div>
       </div>
