@@ -9,7 +9,7 @@ function Home() {
   const contextRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [lineBrushWidth, setLineBrushWidth] = useState(5);
-  const [canvasBackgroundColor, setCanvasBackgroundColor] = useState("#f2f2f2");
+  const [canvasBackgroundColor, setCanvasBackgroundColor] = useState("white");
   const [sendingSketch, setSendingSketch] = useState(false);
 
   // Festgelegte Farben für den CirclePicker

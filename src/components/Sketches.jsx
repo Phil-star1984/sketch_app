@@ -39,9 +39,9 @@ function Sketches() {
       <h1>Sketches</h1>
       <div className="sketches_container">
         {images.map((image, index) => (
-          <div>
-            <div key={image.name} className="sketches_card">
-              <img src={image.url} alt="Sketch" />
+          <div key={image.name} className="sketches_card">
+            <div>
+              <img src={image.url} alt="Portrait Sketch" />
             </div>
             <div className="sketch_infos">
               <p>Sketched by: Phil Splash</p>
