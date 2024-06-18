@@ -118,14 +118,11 @@ button.send_canvas_button::after {
 
 .sketches_card {
   padding: 10px;
-  /* border: 1px solid rgb(0, 0, 0);
-  border-radius: 8px; */
+  border-radius: 8px;
 }
 
 .sketches_card:hover {
-  /* border: 1px solid rgb(0, 0, 0); */
-  background-color: rgba(255, 255, 255, 0.12);
-  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.12);
 }
 
 .sketches_card img {
@@ -173,7 +170,6 @@ button.send_canvas_button::after {
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
     grid-auto-rows: minmax(50px, auto);
-    /* border: 3px solid blue; */
   }
 
   .sketches_card img {
