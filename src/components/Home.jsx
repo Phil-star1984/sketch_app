@@ -11,6 +11,7 @@ function Home() {
   const [lineBrushWidth, setLineBrushWidth] = useState(5);
   const [canvasBackgroundColor, setCanvasBackgroundColor] = useState("white");
   const [sendingSketch, setSendingSketch] = useState(false);
+  const [eraserEnabled, setEraserEnabled] = useState(false);
 
   // Festgelegte Farben für den CirclePicker
   const customColors = ["#b0daff", "#bafab4", "#f9a1ff"];
@@ -93,6 +94,17 @@ function Home() {
     setCanvasBackgroundColor(color.hex);
   };
 
+  const toggleEraser = () => {
+    setEraserEnabled(!eraserEnabled);
+    if (!eraserEnabled) {
+      contextRef.current.globalCompositeOperation = "destination-out";
+      contextRef.current.lineWidth = lineBrushWidth; // You can adjust the size of the eraser
+    } else {
+      contextRef.current.globalCompositeOperation = "source-over"; // Reset to default composite operation
+      contextRef.current.lineWidth = lineBrushWidth;
+    }
+  };
+
   const sendCanvasToServer = async (event) => {
     event.preventDefault();
     setSendingSketch(true);
@@ -152,6 +164,14 @@ function Home() {
                 onChange={() => handleBrushChange(15)}
               />
               Bold
+            </label>
+            <label>
+              Eraser
+              <input
+                type="checkbox"
+                ckecked={eraserEnabled}
+                onChange={toggleEraser}
+              />
             </label>
           </div>
           <CirclePicker
