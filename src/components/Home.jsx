@@ -165,13 +165,14 @@ function Home() {
               />
               Bold
             </label>
-            <label>
-              Eraser
+            <label className="eraser_option">
+              
               <input
                 type="checkbox"
                 ckecked={eraserEnabled}
                 onChange={toggleEraser}
               />
+              Eraser
             </label>
           </div>
           <CirclePicker

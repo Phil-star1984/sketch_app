@@ -33,6 +33,10 @@ body {
   align-items: center;
 }
 
+.eraser_option {
+  margin-left: 0.4rem;
+}
+
 canvas {
   touch-action: none; /* verhindert Standard-Scroll- und Zoom-Gesten */
 }
