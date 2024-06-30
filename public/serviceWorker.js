@@ -1,7 +1,10 @@
 const CACHE_NAME = "version-1";
-const urlsToCache = ["/", "/index-eBfXTQTS.js"];
-
-const self = this;
+const urlsToCache = [
+  "/",
+  "/index-eBfXTQTS.js",
+  "/index-CJHBIcHz.css",
+  "/offline.html",
+];
 
 // Install SW
 self.addEventListener("install", (event) => {
