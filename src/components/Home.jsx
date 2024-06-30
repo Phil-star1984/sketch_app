@@ -107,6 +107,13 @@ function Home() {
 
   const sendCanvasToServer = async (event) => {
     event.preventDefault();
+
+    // Prüfen, ob der Benutzer online ist
+    if (!navigator.onLine) {
+      alert("You are offline! Please check your network connection.");
+      return; // Frühe Rückkehr, wenn offline
+    }
+
     setSendingSketch(true);
     const serverURL = import.meta.env.VITE_SERVER_BASE + "/api/sketches";
 
@@ -166,7 +173,6 @@ function Home() {
               Bold
             </label>
             <label className="eraser_option">
-              
               <input
                 type="checkbox"
                 ckecked={eraserEnabled}
