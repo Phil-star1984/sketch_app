@@ -18,6 +18,7 @@ export default defineConfig({
             src: "logo_bunt.png",
             sizes: "512x512",
             type: "image/png",
+            purpose: "maskable",
           },
         ],
       },
