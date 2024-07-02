@@ -8,15 +8,33 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["favicon.svg", "robots.txt"],
+      includeAssets: "robots.txt",
       manifest: {
         name: "Millionpainter Sketch App",
-        short_name: "SketchApp",
-        theme_color: "#ffffff",
+        short_name: "Millionpainter",
+        theme_color: "#FFFFFF",
+        start_url: "/index.html",
+        background_color: "#000000",
+        display: "minimal-ui",
+        display_override: ["standalone"],
+        scope: "/",
+
         icons: [
           {
-            src: "logo_bunt.png",
+            src: "millionpainter_sketchapp_high-res.png",
             sizes: "512x512",
+            type: "image/png",
+            purpose: "maskable",
+          },
+          {
+            src: "millionpainter_sketchapp_medium-res.png",
+            sizes: "192x192",
+            type: "image/png",
+            purpose: "maskable",
+          },
+          {
+            src: "millionpainter_sketchapp_low-res.png",
+            sizes: "48x48",
             type: "image/png",
             purpose: "maskable",
           },
