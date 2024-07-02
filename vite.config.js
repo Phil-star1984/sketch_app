@@ -13,10 +13,10 @@ export default defineConfig({
         name: "Millionpainter Sketch App",
         short_name: "Millionpainter",
         theme_color: "#FFFFFF",
-        start_url: "/index.html",
+        start_url: "/",
         background_color: "#000000",
         display: "minimal-ui",
-        display_override: ["standalone"],
+
         scope: "/",
 
         icons: [
