@@ -15,10 +15,8 @@ export default defineConfig({
         theme_color: "#FFFFFF",
         start_url: "/",
         background_color: "#000000",
-        display: "minimal-ui",
-
+        display: "standalone",
         scope: "/",
-
         icons: [
           {
             src: "millionpainter_sketchapp_high-res.png",
