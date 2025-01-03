@@ -12,7 +12,7 @@ function Sketches() {
         );
 
         setImages(result.data);
-        /* console.log(result.data); */
+        console.log(result.data);
       } catch (error) {
         console.error("Fehler beim Abrufen der Bilder:", error);
       }
@@ -46,7 +46,7 @@ function Sketches() {
             <div className="sketch_infos">
               <p>Sketched by: Phil Splash</p>
               <p>Date: {Date.now()}</p>
-              <p>From: Sri Lanka</p>
+              {/* <p>From: Sri Lanka</p> */}
               <button onClick={deleteSketch} value={image.name}>
                 Delete
               </button>

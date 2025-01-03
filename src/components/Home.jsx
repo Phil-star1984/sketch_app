@@ -1,20 +1,22 @@
 import { useState, useRef, useEffect } from "react";
-import html2canvas from "html2canvas";
-import downloadjs from "downloadjs";
 import { CirclePicker } from "react-color";
-import axios from "axios";
+import { Link } from "react-router-dom";
+/* import { downloadCanvas } from "../utils/utils.js"; */
+import { useCanvasSender } from "../hooks/useCanvasSender.js";
 
 function Home() {
+  const { sendingSketch, sendCanvasToServer, downloadCanvas } =
+    useCanvasSender();
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [lineBrushWidth, setLineBrushWidth] = useState(5);
   const [canvasBackgroundColor, setCanvasBackgroundColor] = useState("white");
-  const [sendingSketch, setSendingSketch] = useState(false);
+
   const [eraserEnabled, setEraserEnabled] = useState(false);
 
   // Festgelegte Farben für den CirclePicker
-  const customColors = ["#b0daff", "#bafab4", "#f9a1ff"];
+  const customColors = ["#b0daff", "#ffeb33", "#f9a1ff"];
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -82,15 +84,7 @@ function Home() {
     setLineBrushWidth(newWidth);
   };
 
-  const downloadCanvas = async (event) => {
-    event.preventDefault();
-    console.log(canvasRef.current);
-    const canvas = await html2canvas(document.body);
-    const dataURL = canvas.toDataURL("image/jpeg", 1.0);
-    downloadjs(dataURL, "MillionPainterSketch.jpg", "image/jpeg");
-  };
-
-  const handleColorChange = (color, event) => {
+  const handleColorChange = (color) => {
     setCanvasBackgroundColor(color.hex);
   };
 
@@ -105,43 +99,8 @@ function Home() {
     }
   };
 
-  const sendCanvasToServer = async (event) => {
-    event.preventDefault();
-
-    // Prüfen, ob der Benutzer online ist
-    if (!navigator.onLine) {
-      alert("You are offline! Please check your network connection.");
-      return; // Frühe Rückkehr, wenn offline
-    }
-
-    setSendingSketch(true);
-    const serverURL = import.meta.env.VITE_SERVER_BASE + "/api/sketches";
-
-    // Verwende html2canvas, um das Bild zu erfassen
-    html2canvas(document.body, {
-      scale: 0.7,
-    }).then((canvas) => {
-      canvas.toBlob(
-        async (blob) => {
-          const formData = new FormData();
-          formData.append("image", blob, "MillionPainterSketch.jpg");
-
-          try {
-            const response = await axios.post(serverURL, formData, {
-              headers: {
-                "Content-Type": "multipart/form-data",
-              },
-            });
-            console.log("Bild erfolgreich gesendet:", response.data);
-            setSendingSketch(false);
-          } catch (error) {
-            console.error("Fehler beim Senden des Bildes:", error);
-          }
-        },
-        "image/jpeg",
-        0.8
-      );
-    });
+  const clearCanvas = () => {
+    window.location.reload();
   };
 
   return (
@@ -175,7 +134,7 @@ function Home() {
             <label className="eraser_option">
               <input
                 type="checkbox"
-                ckecked={eraserEnabled}
+                ckecked={eraserEnabled.toString()}
                 onChange={toggleEraser}
               />
               Eraser
@@ -189,12 +148,20 @@ function Home() {
             circleSize={18}
             circleSpacing={6}
           />
-          <button className="download_canvas_button" onClick={downloadCanvas}>
-            Save
-          </button>
-          <button className="send_canvas_button" onClick={sendCanvasToServer}>
-            Publish
-          </button>
+          <div className="processing_options">
+            <button className="clear_canvas_button" onClick={clearCanvas}>
+              Clear
+            </button>
+            <button className="download_canvas_button" onClick={downloadCanvas}>
+              Save
+            </button>
+            <Link to="/sketches">
+              <button className="all_sketches_button">All</button>
+            </Link>
+            <button className="send_canvas_button" onClick={sendCanvasToServer}>
+              Publish
+            </button>
+          </div>
         </div>
       </div>
       {sendingSketch && (

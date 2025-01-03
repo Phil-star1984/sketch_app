@@ -55,8 +55,16 @@ canvas {
   font-weight: 600;
 }
 
-.download_canvas_button {
+.processing_options {
   margin-left: 0.6rem;
+}
+
+.download_canvas_button {
+  margin-left: 0.3rem;
+}
+
+.all_sketches_button {
+  margin-left: 0.3rem;
 }
 
 .send_canvas_button {
