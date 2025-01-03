@@ -47,9 +47,9 @@ function Sketches() {
               <p>Sketched by: Phil Splash</p>
               <p>Date: {Date.now()}</p>
               {/* <p>From: Sri Lanka</p> */}
-              <button onClick={deleteSketch} value={image.name}>
+              {/* <button onClick={deleteSketch} value={image.name}>
                 Delete
-              </button>
+              </button> */}
             </div>
           </div>
         ))}
